@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' A _very_ simple and incomplete parser for Serato Live session files '''
+''' A _very_ simple and incomplete parser for m3u/m3u8 files '''
 
 import logging
 import os

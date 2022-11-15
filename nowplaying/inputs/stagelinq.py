@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' A _very_ simple and incomplete parser for Serato Live session files '''
+''' a mostly untested driver for Denon StagelinQ '''
 
 import asyncio
 import logging
