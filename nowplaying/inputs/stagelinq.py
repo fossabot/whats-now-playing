@@ -16,9 +16,11 @@ import PyStageLinQ.ErrorCodes
 import PyStageLinQ.Network
 import PyStageLinQ.Token
 
+import nowplaying.hostmeta
 from nowplaying.inputs import InputPlugin
 from nowplaying.exceptions import PluginVerifyError
 import nowplaying.utils
+import nowplaying.version
 
 # https://datatracker.ietf.org/doc/html/rfc8216
 
@@ -29,17 +31,16 @@ class PyStagelinQDriver:
     STAGELINQ_DISCOVERY_PORT = 51337
     ANNOUNCE_IP = "169.254.255.255"
 
-    def __init__(self, new_device_found_callback, name):
-        self.name = name
+    def __init__(self, new_device_found_callback):
         self.owntoken = PyStageLinQ.Token.StageLinQToken()
         self.discovery_info = None
         self.owntoken.generate_token()
         self.discovery_info = PyStageLinQ.DataClasses.StageLinQDiscoveryData(
             Token=self.owntoken,
-            DeviceName=self.name,
+            DeviceName=nowplaying.hostmeta.gethostmeta()['hostname'],
             ConnectionType=PyStageLinQ.MessageClasses.ConnectionTypes.HOWDY,
-            SwName="Python",
-            SwVersion="1.0.0",
+            SwName="whatsnowplaying",
+            SwVersion=nowplaying.version.get_versions()['version'],
             ReqServicePort=PyStagelinQDriver.REQUESTSERVICEPORT)
 
         self.device_list = PyStageLinQ.Device.DeviceList()
@@ -168,16 +169,10 @@ class Plugin(InputPlugin):
 
     metadata = {'artist': None, 'title': None, 'filename': None}
 
-    def __init__(self, config=None, m3udir=None, qsettings=None):
+    def __init__(self, config=None, qsettings=None):
         super().__init__(config=config, qsettings=qsettings)
-        if m3udir and os.path.exists(m3udir):
-            self.m3udir = m3udir
-        else:
-            self.m3udir = None
-
         self.mixmode = "newest"
         self.event_handler = None
-        self.observer = None
         self.qwidget = None
         self._reset_meta()
 
@@ -189,7 +184,7 @@ class Plugin(InputPlugin):
         ''' set up a custom watch on the m3u dir so meta info
             can update on change'''
 
-        m3udir = self.config.cparser.value('m3u/directory')
+        self.driver = PyStagelinQDriver(self.incoming)
         if not self.m3udir or self.m3udir != m3udir:
             await self.stop()
 
