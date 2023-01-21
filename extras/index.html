@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Artist Extras &#8212; What&#39;s Now Playing 0+untagged.1.g71e73c1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Two-Computer Setup With Beam" href="../beam.html" />
+    <link rel="prev" title="AcoustID/MusicBrainz" href="../recognition/acoustidmb.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="artist-extras">
+<h1>Artist Extras<a class="headerlink" href="#artist-extras" title="Permalink to this heading">¶</a></h1>
+<blockquote>
+<div><p>WARNING: This feature is still in an experimental stage.</p>
+<p>IMPORTANT: Many settings in this section currently require a restart of the software in order to take effect.</p>
+</div></blockquote>
+<p>Need some extra content for audio-only DJing?  The artist extras plug-ins allow for
+near real-time downloads of banners, logos, thumbnails, and fan art based upon the
+artists of the track that is currently playing.</p>
+<section id="artwork-details">
+<h2>Artwork Details<a class="headerlink" href="#artwork-details" title="Permalink to this heading">¶</a></h2>
+<a class="reference external image-reference" href="images/artexamples.png"><img alt="OBS screen with an example of each image type" src="../_images/artexamples.png" /></a>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">Image Resources</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>WebSocket URL</p></th>
+<th class="head"><p>Raw Image URL</p></th>
+<th class="head"><p>WS Height</p></th>
+<th class="head"><p>WS Width</p></th>
+<th class="head"><p>General Quality</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Banners</p></td>
+<td><p>/artistbanner.htm</p></td>
+<td><p>/artistbanner.png</p></td>
+<td><p>200px</p></td>
+<td><p>No Max</p></td>
+<td><p>High</p></td>
+<td><p>Image usually with picture and name of artist.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fan Art</p></td>
+<td><p>/artistfanart.htm</p></td>
+<td></td>
+<td><p>800px</p></td>
+<td><p>1280px</p></td>
+<td><p>Varies</p></td>
+<td><p>Most sites curate these to be of higher quality but low quality images do get in</p></td>
+</tr>
+<tr class="row-even"><td><p>Logos</p></td>
+<td><p>/artistlogo.htm</p></td>
+<td><p>/artistlogo.png</p></td>
+<td><p>200px</p></td>
+<td><p>480px</p></td>
+<td><p>High</p></td>
+<td><p>Stylized text or image that represents the artist</p></td>
+</tr>
+<tr class="row-odd"><td><p>Thumbnails</p></td>
+<td><p>/artistthumb.htm</p></td>
+<td><p>/artistthumb.png</p></td>
+<td><p>480px</p></td>
+<td><p>200px</p></td>
+<td><p>Varies</p></td>
+<td><p>Image of the artist</p></td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Raw image URLs are not scaled and represent the original format as downloaded.</p></li>
+<li><p>Enabling this feature may cause a slowdown during the Exit of the app in order to save work in progress.</p></li>
+<li><p>Tracks with multiple artists will download both sets of images. However, only one will be used for fanart,
+banners, and logos.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="biographies">
+<h2>Biographies<a class="headerlink" href="#biographies" title="Permalink to this heading">¶</a></h2>
+<p>Additionally, a biography of the artist may also be available. These biographies are
+also written by fans and may be brief or fairly detailed. The ‘artistlongbio’ value has the full content whereas the ‘artistshortbio’ has only the content that will fit in a single Twitch chat message.</p>
+<blockquote>
+<div><p>NOTE: The short bio will end in a complete sentence as determined by a natural language toolkit.  One should be aware, however, that punctuation marks may occasionally trip it up so the last sentence may get truncated early.</p>
+</div></blockquote>
+</section>
+<section id="timing">
+<h2>Timing<a class="headerlink" href="#timing" title="Permalink to this heading">¶</a></h2>
+<p>Most of the content is downloaded during the write delay time period as set in the
+<a class="reference external" href="../settings.html">general settings</a> . You may need to bump up the delay to give enough time to not have
+‘empty’ graphics.  In general:</p>
+<ul class="simple">
+<li><p>Every time an artist is loaded as a track, the system will try to download any new art that was either skipped or missed. So all limits that are set are for that track’s downloads.  All previously downloaded content will is saved locally for long periods of time.  (They will eventually be removed.)</p></li>
+<li><p>Banners, Logos, and Thumbnails are determined once per track from whatever content has been downloaded just prior to announcement.</p></li>
+<li><p>Fanart will start to download next and will rotate during the entire time that artist is being played.</p></li>
+<li><p>Switching to a different track from the same artist pick new banners, logos, and thumbnails if they are available.</p></li>
+<li><p>Collaborations will attempt (but it is not guaranteed!) to pull extras for both artists if the metadata of the track has more than one set of artists listed. For example, a track labeled with both David Bowie and Lou Reed should have both Bowie and Reed’s images.</p></li>
+</ul>
+</section>
+<section id="generic-settings">
+<h2>Generic Settings<a class="headerlink" href="#generic-settings" title="Permalink to this heading">¶</a></h2>
+<p>Configuring this feature is more involved than many others due to the need to
+compensate for various hardware limitations such as CPU and network bandwidth
+vs the amount of time it takes for the content to be available.  The default
+settings are thought to be fairly conservative and work with most configurations
+that have relatively good Internet connectivity with a Write Delay of 5 seconds.</p>
+<p>Maximums:  the number of images to attempt to download at a given time out of the total set available.
+Banners, logos, and thumbnails are downloaded first, and then fan art will be downloaded. Any extra
+fan art will be downloaded.  The maximums should be low enough that the first set downloads prior to
+the track being announced and the fanart finishes downloading prior to the next track being selected.</p>
+<p>Download processes: The number of background processes to run that do nothing but download
+art and update the backend storage.  This number should be configured high enough to get all
+of the first pass of downloads done quickly but low enough that it doesn’t overwhelm</p>
+<p>The ‘Clear Cache’ button will remove all mappings between artists and images.  It does not remove the
+cached responses from the web server in order to save bandwidth.</p>
+</section>
+<section id="reminder">
+<h2>Reminder<a class="headerlink" href="#reminder" title="Permalink to this heading">¶</a></h2>
+<p>In order to perform these look ups, certain data is required to be tagged in the media to
+make the results remotely accurate.  More data == more better results.  Therefore, media
+with ISRC tags will cause MusicBrainz lookups if that service is enabled to fill in
+any missing data.</p>
+</section>
+<section id="discogs">
+<h2>Discogs<a class="headerlink" href="#discogs" title="Permalink to this heading">¶</a></h2>
+<a class="reference external image-reference" href="images/discogs.png"><img alt="Discogs Settings" src="../_images/discogs.png" /></a>
+<p>Provides: Biographies, Fan art, Thumbnails, Websites</p>
+<p>Media tags: album and artist</p>
+<p><a class="reference external" href="https://www.discogs.com">Discogs</a> is a well-known source for music release information, a
+marketplace, and more. Be aware of Discogs Terms of Use as linked to on
+their <a class="reference external" href="https://www.discogs.com/developers">API Page</a>. All you need to do is
+<a class="reference external" href="https://www.discogs.com/settings/developers">Get a personal access token</a>. Discogs uses a
+pure text-search; results may be somewhat unreliable.</p>
+</section>
+<section id="fanart-tv">
+<h2>fanart.tv<a class="headerlink" href="#fanart-tv" title="Permalink to this heading">¶</a></h2>
+<a class="reference external image-reference" href="images/fanarttv.png"><img alt="fanart.tv Settings" src="../_images/fanarttv.png" /></a>
+<p>Provides: Banners, Fan art, Logos, and Thumbnails</p>
+<p>Media tags: MusicBrainz Artist ID</p>
+<p><a class="reference external" href="https://www.fanart.tv">fanart.tv</a> is a community project to provide high quality
+artwork for music and other media. It requires music be tagged with
+<a class="reference external" href="https://www.musicbrainz.org">MusicBrainz</a> artist ids. You will need a
+<a class="reference external" href="https://fanart.tv/get-an-api-key/">Fanart API Key</a> in order to use this service.</p>
+</section>
+<section id="theaudiodb">
+<h2>TheAudioDB<a class="headerlink" href="#theaudiodb" title="Permalink to this heading">¶</a></h2>
+<a class="reference external image-reference" href="images/theaudiodb.png"><img alt="theaudiodb Settings" src="../_images/theaudiodb.png" /></a>
+<p>Provides: Banners, Biographies, Fan art, Logos, Thumbnails, and Websites</p>
+<p>Media tags: artist or MusicBrainz Artist ID</p>
+<p><a class="reference external" href="https://www.theaudiodb.com">TheAudioDB</a> is a community project to provide high quality
+artwork and other metadata for music. If <a class="reference external" href="https://www.musicbrainz.org">MusicBrainz</a>
+artist ids are available, it will use that information to increase accuracy. You will need a
+<a class="reference external" href="https://www.theaudiodb.com/api_guide.php">TheAudioDB API Key</a> in order to use this service.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">What's Now Playing</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrading.html">Upgrading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../input/index.html">Source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../output/index.html">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requests.html">User Track Requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filter.html">Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recognition/index.html">Music Recognition</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Artist Extras</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#artwork-details">Artwork Details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#biographies">Biographies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#timing">Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generic-settings">Generic Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reminder">Reminder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discogs">Discogs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fanart-tv">fanart.tv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#theaudiodb">TheAudioDB</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../beam.html">Two-Computer Setup With Beam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quirks.html">Quirks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templatevariables.html">Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html#bug-reports-and-feature-requests">Bug Reports and Feature Requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comparisons.html">Versus Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gallery.html">Gallery of Templates</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../recognition/acoustidmb.html" title="previous chapter">AcoustID/MusicBrainz</a></li>
+      <li>Next: <a href="../beam.html" title="next chapter">Two-Computer Setup With Beam</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021-2023, Allen Wittenauer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/extras/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

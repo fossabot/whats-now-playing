@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>User Track Requests &#8212; What&#39;s Now Playing 0+untagged.1.g71e73c1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Filter" href="filter.html" />
+    <link rel="prev" title="Webserver" href="output/webserver.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="user-track-requests">
+<h1>User Track Requests<a class="headerlink" href="#user-track-requests" title="Permalink to this heading">¶</a></h1>
+<p><strong>What’s Now Playing</strong> has the ability to help manage requests that come from Twitch users.</p>
+<p>There are two types of requests, roulette and non-roulette.  Roulette requests will pick a
+random song from the given playlist/crate as the request.  Non-roulette require the user
+to provide the title and optionally the artist.</p>
+<a class="reference external image-reference" href="images/requests_generic.png"><img alt="Request Window" src="_images/requests_generic.png" /></a>
+<p>If <strong>What’s Now Playing</strong> detects the song has been played, it will be removed from the
+Requests queue.</p>
+<section id="using-twitch-chat-for-requests">
+<h2>Using Twitch Chat for Requests<a class="headerlink" href="#using-twitch-chat-for-requests" title="Permalink to this heading">¶</a></h2>
+<p>To enable Twitch chat to be used for requests:</p>
+<ol class="arabic simple">
+<li><p>Configure and enable Twitch Chat support.</p></li>
+<li><p>Create a command that will be used for requests. There is an example template file
+called ‘twitchbot_request.txt’ as an example.</p></li>
+<li><p>Assign that command to the appropriate entry in the Requests settings in <strong>What’s Now Playing</strong>.
+See later on below.</p></li>
+</ol>
+<p>For non-roulette requests, artist and title information should be entered on the
+chat line.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>modernmeerkat: !request Blur - &quot;Parklife&quot;
+modernmeerkatbot: Thanks @modernmeerkat! Your special request of &quot;Parklife&quot; by Blur has been noted!
+</pre></div>
+</div>
+</section>
+<section id="using-twitch-redemptions-for-requests">
+<h2>Using Twitch Redemptions for Requests<a class="headerlink" href="#using-twitch-redemptions-for-requests" title="Permalink to this heading">¶</a></h2>
+<p>To enable Twitch redemptions to be used for requests:</p>
+<ol class="arabic">
+<li><p>Configure and enable Twitch support with Client and Secret IDs.</p></li>
+<li><p>Create a a reward in the Twitch UI.  Keep track of the _exact_ text used in the reward description.</p></li>
+<li><p>If the channel redemption is not a roulette request, then the reward should take user input to
+provide the artist and title information.</p></li>
+<li><p>Copy the exact text into the ‘Redemption Text’ field in the appropriate entry in the
+Requests settings in <strong>What’s Now Playing</strong>.</p>
+<p>NOTE: <strong>What’s Now Playing</strong> does not manage the Twitch-side Reward Requests Queue.  You will
+still need to approve or refund channel points in the Twitch moderator panel.</p>
+</li>
+</ol>
+</section>
+<section id="configuring-requests">
+<h2>Configuring Requests<a class="headerlink" href="#configuring-requests" title="Permalink to this heading">¶</a></h2>
+<a class="reference external image-reference" href="images/requests_settings.png"><img alt="Request Settings" src="_images/requests_settings.png" /></a>
+<ol class="arabic simple">
+<li><p>Under Settings, select Requests.</p></li>
+<li><p>Enable Requests support</p></li>
+<li><p>Enable one or both of Twitch Channel Redemption Requests and Twitch Chat Requests depending
+upon your needs.</p></li>
+<li><p>Add Entry</p></li>
+<li><p>Change the Chat Command to the Twitch Chat command in order to enable this Request via chat.</p></li>
+<li><p>Put in the exact Twitch reward text in the Redemption Text field to enable this Request via channel points.</p></li>
+<li><p>If this request is meant to be a Roulette, check the Roulette box.</p></li>
+<li><p>Fill in a displayname.  This name will be shown to users when referencing requests of this type.</p></li>
+<li><p>For roulette requests, enter in the playlist or crate name.  See below for more information.</p></li>
+</ol>
+</section>
+<section id="roulette-playlists">
+<h2>Roulette Playlists<a class="headerlink" href="#roulette-playlists" title="Permalink to this heading">¶</a></h2>
+<p>In order for Roulette requests to work, <strong>What’s Now Playing</strong> needs to have a list of tracks to
+use.  The name here should match the name that your DJ software also uses:</p>
+<p>Serato:  The name of the crate or smart crate.
+Virtual DJ: playlist name
+Traktor: playlist name</p>
+<blockquote>
+<div><p>NOTE: See the section on your particular DJ software for known caveats/issues.</p>
+</div></blockquote>
+<p>If the random song picked is not desired (inappropriate, already played, etc), you may force
+the software to re-pick:</p>
+<ol class="arabic simple">
+<li><p>Selecting the track in the Requests window.</p></li>
+<li><p>Click Respin</p></li>
+<li><p>Wait a few moments for the software to pick a new one. (It does not do it immediately.)</p></li>
+<li><p>The track should get replaced with a different one.</p></li>
+<li><p>If it is still not desired, repeat this process as many times as necessary.</p></li>
+</ol>
+<blockquote>
+<div><p>NOTE: There is no notification to users that Respin has been selected.</p>
+</div></blockquote>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">What's Now Playing</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input/index.html">Source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="output/index.html">Outputs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Track Requests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-twitch-chat-for-requests">Using Twitch Chat for Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-twitch-redemptions-for-requests">Using Twitch Redemptions for Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-requests">Configuring Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roulette-playlists">Roulette Playlists</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filter.html">Filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recognition/index.html">Music Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extras/index.html">Artist Extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="beam.html">Two-Computer Setup With Beam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quirks.html">Quirks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templatevariables.html">Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#bug-reports-and-feature-requests">Bug Reports and Feature Requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developers.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparisons.html">Versus Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gallery.html">Gallery of Templates</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="output/webserver.html" title="previous chapter">Webserver</a></li>
+      <li>Next: <a href="filter.html" title="next chapter">Filter</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021-2023, Allen Wittenauer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/requests.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
